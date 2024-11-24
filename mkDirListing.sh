@@ -8,7 +8,7 @@ if ! [[ "$1" =~ ^\. ]] && [[ "$1" != "" ]]; then
   fi
   cd $1
   for i in *; do
-    if ! [[ "$i" == "index.html" ]] && ! [[ "$i" == "index.md" ]] && ! ((cat $1/index.md | grep "\[$i\]") &> /dev/null); then
+    if ! [[ "$i" == "index.html" ]] && ! [[ "$i" == "index.md" ]] && ! ((cat index.md | grep "\[$i\]") &> /dev/null); then
        echo -e "[$i]($i)\n" >> index.md
        somethingUpdated=true
     fi
