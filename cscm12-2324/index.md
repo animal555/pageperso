@@ -4,11 +4,7 @@
 
 [complexity.pdf](complexity.pdf)
 
-[CSCM12-Coursework](CSCM12-Coursework)
-
-[1.pdf](1.pdf)
-
-[1.pdf.1](1.pdf.1)
+[CSCM12-Coursework 1.pdf](CSCM12-Coursework 1.pdf)
 
 [CW2.pdf](CW2.pdf)
 
