@@ -1,0 +1,66 @@
+
+a:hover{opacity: 0.75;cursor:crosshair;}
+g.button:hover{opacity: 0.75;cursor:crosshair;}
+g.button{z-index:10;unselectable:'on';onselectstart:'return false;'; -webkit-touch-callout: none;-webkit-user-select: none;
+  -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;user-select: none;}
+g.dragable:hover{opacity: 0.75;cursor:move;}
+g.dragable{z-index:10;unselectable:'on';onselectstart:'return false;'; -webkit-touch-callout: none;-webkit-user-select: none;
+  -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;user-select: none;}
+g.editable:hover{opacity: 0.75;cursor:text;}
+g.editable{z-index:10;unselectable:'on';onselectstart:'return false;'; -webkit-touch-callout: none;-webkit-user-select: none;
+  -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;user-select: none;}
+div.editor{position:fixed;border:2px solid blue;background:#000080;background:rgba(0,0,255,0.5);}
+div.editor {margin:0; }
+div.editor .textArea{padding:0px; bottom:0; }
+div.editor textarea{padding:2px; resize:both;}
+svg text{pointer-events:none;}
+svg path{pointer-events:none;}
+svg rect{pointer-events:none;}
+svg a text{pointer-events:all;}
+svg .button text{pointer-events:all;}
+svg .editable text{pointer-events:all;}
+svg .dragable text{pointer-events:all;}
+svg a path{pointer-events:all;}
+svg .button path{pointer-events:all;}
+svg .editable path{pointer-events:all;}
+svg .dragable path{pointer-events:all;}
+svg a rect{pointer-events:all;}
+svg .button rect{pointer-events:all;}
+svg .editable rect{pointer-events:all;}
+svg .dragable rect{pointer-events:all;}
+@font-face { font-family:f0; src:url("Neo-Euler_0_0_6fa8cf564d54d61a09d60bbfa56b3a4f.otf") format("opentype"); }
+.c0 { font-family:f0;font-size:3.7px; fill:#fcb54b;}
+
+a:hover{opacity: 0.75;cursor:crosshair;}
+g.button:hover{opacity: 0.75;cursor:crosshair;}
+g.button{z-index:10;unselectable:'on';onselectstart:'return false;'; -webkit-touch-callout: none;-webkit-user-select: none;
+  -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;user-select: none;}
+g.dragable:hover{opacity: 0.75;cursor:move;}
+g.dragable{z-index:10;unselectable:'on';onselectstart:'return false;'; -webkit-touch-callout: none;-webkit-user-select: none;
+  -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;user-select: none;}
+g.editable:hover{opacity: 0.75;cursor:text;}
+g.editable{z-index:10;unselectable:'on';onselectstart:'return false;'; -webkit-touch-callout: none;-webkit-user-select: none;
+  -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;user-select: none;}
+div.editor{position:fixed;border:2px solid blue;background:#000080;background:rgba(0,0,255,0.5);}
+div.editor {margin:0; }
+div.editor .textArea{padding:0px; bottom:0; }
+div.editor textarea{padding:2px; resize:both;}
+svg text{pointer-events:none;}
+svg path{pointer-events:none;}
+svg rect{pointer-events:none;}
+svg a text{pointer-events:all;}
+svg .button text{pointer-events:all;}
+svg .editable text{pointer-events:all;}
+svg .dragable text{pointer-events:all;}
+svg a path{pointer-events:all;}
+svg .button path{pointer-events:all;}
+svg .editable path{pointer-events:all;}
+svg .dragable path{pointer-events:all;}
+svg a rect{pointer-events:all;}
+svg .button rect{pointer-events:all;}
+svg .editable rect{pointer-events:all;}
+svg .dragable rect{pointer-events:all;}
+@font-face { font-family:f0; src:url("Neo-Euler_0_0_6fa8cf564d54d61a09d60bbfa56b3a4f.otf") format("opentype"); }
+.f0 { font-family:f0;font-size:3.7mm;}
+.i { font-size:0; }
+body { background:#000000;}

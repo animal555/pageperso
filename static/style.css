@@ -1,0 +1,27 @@
+body{
+background: #fce8e8;
+margin-left:5%;
+margin-right:5%;
+margin-top:20px;
+}
+
+p, ul {
+  margin-left:2%;
+}
+
+.columns{
+column-width:10em;
+column-gap:40px;
+column-count:2;
+}
+.publitem{
+display:inline-block;
+}
+a:link {
+  color: #226622;
+}
+footer { text-align: right; }
+
+div.sourceCode{
+  margin-left: 4%;
+}
