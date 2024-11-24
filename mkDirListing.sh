@@ -14,6 +14,6 @@ if ! [[ "$1" =~ ^\. ]] && [[ "$1" != "" ]]; then
     fi
   done
   if [[ "$somethingUpdated" == "true" ]]; then 
-    pandoc -s --css ../static/style.css --template=htmltemplate.html -f markdown $1/index.md > $1/index.html
+    pandoc -s --css ../static/style.css --template=htmltemplate.html --metadata=title:"here be files" -f markdown $1/index.md > $1/index.html
   fi
 fi

@@ -1,3 +1,5 @@
+%PROFESSIONAL webpage
+
 Hi, I\'m Cécilia! I have been a lecturer at Swansea University since
 fall 2021; this page is essentially a list of papers/drafts I have been
 involved with, most of those should be freely available on
