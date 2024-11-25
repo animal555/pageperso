@@ -28,5 +28,7 @@
 
 [defence.pdf](defence.pdf)
 
+[proof24.pdf](proof24.pdf)
+
 [smp21.pdf](smp21.pdf)
 
