@@ -16,13 +16,9 @@
 
 [BTreeExercises.java](BTreeExercises.java)
 
-[complexityIntro.pdf](complexityIntro.pdf)
-
 [CW1-CSCM12-2223.pdf](CW1-CSCM12-2223.pdf)
 
 [CW2-CSCM12-2223.pdf](CW2-CSCM12-2223.pdf)
-
-[datastructures.pdf](datastructures.pdf)
 
 [Fractals.java](Fractals.java)
 
@@ -30,15 +26,19 @@
 
 [ListExercises.java](ListExercises.java)
 
-[paradigmsAndSorting.pdf](paradigmsAndSorting.pdf)
-
 [PriorityQueuesExercises.java](PriorityQueuesExercises.java)
+
+[StacksExercises.java](StacksExercises.java)
+
+[complexityIntro.pdf](complexityIntro.pdf)
+
+[datastructures.pdf](datastructures.pdf)
+
+[paradigmsAndSorting.pdf](paradigmsAndSorting.pdf)
 
 [recursionIntro.pdf](recursionIntro.pdf)
 
 [revision-sheet.pdf](revision-sheet.pdf)
-
-[StacksExercises.java](StacksExercises.java)
 
 [trees.pdf](trees.pdf)
 

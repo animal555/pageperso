@@ -2,5 +2,8 @@
 
 cd $(dirname "$0")
 ./mkDirListings.sh
-make
+make -B
+cd cs205-2425
+make -B
+cd ..
 rclone sync --exclude ".git/**" . grgdf:cpradic
