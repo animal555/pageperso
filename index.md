@@ -51,7 +51,7 @@ aspects of Monadic Second Order logic.
   *Generating collection queries from proofs*,
      with Michael Benedikt,
      POPL 2021,
-     [arxiv](https://arviv.org/abs/2005.06503)
+     [arxiv](https://arxiv.org/abs/2005.06503)
 \
   *Implicit automata in typed λ-calculi I: aperiodicity in a non-commutative logic*,
      with Lê Thành Dũng Nguyễn,
@@ -81,12 +81,12 @@ aspects of Monadic Second Order logic.
   *A Curry-Howard Approach to Church\'s Synthesis*,
      with Colin Riba,
      FSCD 2017/LMCS 2019,
-     [arxiv](https://arviv.org/abs/1803.08958)
+     [arxiv](https://arxiv.org/abs/1803.08958)
 \
   *The Logical Strength of Büchi's Decidability Theorem*,
      with Leszek Aleksander Kołodziejczyk, Henryk Michalewski and Michał Skrzypczak,
      CSL 2016/LMCS 2019,
-     [arxiv](https://arviv.org/abs/1608.07514)
+     [arxiv](https://arxiv.org/abs/1608.07514)
 \
   *Integrating Linear and Dependent Types*,
      with Nick Benton and Neel Krishnaswami,
