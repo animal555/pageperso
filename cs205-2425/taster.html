@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title>taster</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><a href="index.html">Back to index</a></p>
+<h1 id="our-first-foray-into-haskell">Our first foray into Haskell</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleFunction ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<p>the line above is a <em>type declaration</em> essentially it says:
+“somehwere in the module, I will provide a function named
+‘exampleFunction’ which is going to have type”Int -&gt; Int” The name of
+functions always starts with a lowercase letter</p>
+<p>in most scenarios, the type declaration is optional as Haskell is
+very good at guessing and assigning types! But it is good practice to
+have them, as it helps debugging; the compiler typically gives more
+informative error messages then.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>exampleFunction x <span class="ot">=</span> x <span class="op">+</span> x</span></code></pre></div>
+<p>this line is an equation defining the function all haskell functions
+are defined using more or less sophisticated variant of these!</p>
+<p>on the left-hand side, we give the name of the function, as well as a
+name to its argument(s) (here it is x, but it could be arbitrary). We
+don’t put type information, it’s already taken care of in the type
+declaration or guessed by Haskell; just because this is the first
+argument and the type of the function is Int -&gt; …, x will be assumed
+to be an Int.</p>
+<p>the right-hand side is the value returned by the function, which can
+depend on its arguments.</p>
+<p>most of the functions in this file you could “translate to java”
+fairly easily generalizing the following example</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">exampleFunction</span><span class="op">(</span><span class="dt">int</span> x<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>     <span class="cf">return</span> x <span class="op">+</span> x<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span></code></pre></div>
+<p>The body will almost always be of the shape
+<code>return &lt;rhs of decl&gt;</code>, and the first line determined
+by <em>both</em> the type declaration <em>and</em> the argument names on
+the right-hand side.</p>
+<p>If you have HLS installed and a decent text editor setup (the easiest
+is probably to get vscode with the haskell plugin), you can evaluate
+values as in GHCI with the following syntax</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction 4</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- 8</span></span></code></pre></div>
+<p>Note that function application in Haskell does not require to put
+parentheses around function arguments. Although you can add parentheses
+if you like, but parenthesesing from the point of view of haskell is
+more akin to parenthesizing arithmetical expressions than anything else
+(the idea is that function application is a bit like a special ghost
+binary operator which has a given priority over the other operators and
+is implicitly left-associative)</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; (exampleFunction ((8)))</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ot">``` Now here is a similar function  with two arguments ```</span>haskell</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleFunction2 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>exampleFunction2 x y <span class="ot">=</span> <span class="fu">fromIntegral</span> x <span class="op">+</span> y</span></code></pre></div>
+<p>Several things of note: * now that we have multiple arguments, we
+have to provide names on the LHS for each one. x is the Int, y is the
+Float, and that is determined from the type signature. * fromIntegral is
+a function that is able to turn an Int into a Float. Its actual type is
+a bit spooky, but we can check it is the case with the following kind of
+query, which would just raise an error if this was wrong</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (fromIntegral :: Int -&gt; Float)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- (fromIntegral :: Int -&gt; Float) :: Int -&gt; Float</span></span></code></pre></div>
+<p>(example of such a query failing)</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (fromIntegral :: Float -&gt; Int)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- No instance for (Integral Float)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   arising from a use of `fromIntegral&#39;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: fromIntegral :: Float -&gt; Int</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: fromIntegral :: Float -&gt; Int</span></span></code></pre></div>
+<p>To apply a function to multiple arguments, one should have the
+arguments separated by a space.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction2 5 6</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- 11.0</span></span></code></pre></div>
+<p>Do not comma-separate arguments.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction2 5 , 6</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- parse error on input `,&#39;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction2(5, 6)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Couldn&#39;t match expected type `Int&#39;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">--             with actual type `(a0_acbs[tau:1], b0_acbt[tau:1])&#39;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the first argument of `exampleFunction2&#39;, namely `(5, 6)&#39;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: exampleFunction2 (5, 6)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- In an equation for `it_acap&#39;: it_acap = exampleFunction2 (5, 6)</span></span></code></pre></div>
+<p>parenthesizing can and should be used if you want to pass complex
+arguments that use auxiliary operators/functions</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction2 ((8 + 9) * 5) (exampleFunction2 2 4)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- 91.0</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- For types, for now it is enough to know the following:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- * Int is the type of fixed-width integers (java int)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- * Integer is the type of arbitrary-size integers</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- * Float is the type of floating type numbers (java float)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- * [Int] is the type of the lists of Int</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- * more generally, if T is a type, [T] is the type of lists of Ts</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- To build elements of the list types, we have two basic constructors:</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">--</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- * the empty list [] that we have just seen</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- * `(:)` that adds an element to the front</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (:)</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- (:) :: a -&gt; [a] -&gt; [a]</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ((:) :: Int -&gt; [Int] -&gt; [Int])</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">-- ((:) :: Int -&gt; [Int] -&gt; [Int]) :: Int -&gt; [Int] -&gt; [Int]</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; (:) 1 ((:) 6 [])</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">-- [1,6]</span></span></code></pre></div>
+<p>The parentheses around <code>:</code> means that we can write this
+function as an infix operator (by convention it is
+right-associative)</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; 1 : 6 : []</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- [1,6]</span></span></code></pre></div>
+<p>Lists are well typed, hence we cannot mix things of different types
+in lists.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :type [[False, True], 87]</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- No instance for (Num [Bool]) arising from the literal `87&#39;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: 87</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: [[False, True], 87]</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Example of a list function</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleFunction3 ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>exampleFunction3 xs <span class="ot">=</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">9</span> <span class="op">:</span> xs</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction3 [7,8,9]</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- [0,9,7,8,9]</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleFunction4 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>exampleFunction4 n xs <span class="ot">=</span> <span class="fu">reverse</span> xs <span class="op">++</span> [n , n] <span class="op">++</span> xs</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction4 2 [1,0]</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- [0,1,2,2,1,0]</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleFunction5 ::</span> [[<span class="dt">Int</span>]] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>exampleFunction5 xss <span class="ot">=</span> <span class="fu">head</span> xss <span class="op">++</span> <span class="fu">head</span> (<span class="fu">tail</span> xss)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; exampleFunction5 [[0..5],[4..0],[], [1],[11]]</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- [0,1,2,3,4,5]</span></span></code></pre></div>
+<p>head and tail may raise errors (much like when you attempt division
+by 0)</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; head []</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Prelude.head: empty list</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; tail []</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Prelude.tail: empty list</span></span></code></pre></div>
+<p>Finally, if you want to do the challenge task in the lab, you may
+want to know about how to define intermediate values in computation.
+This can be achieved in with two constructs in Haskell: the let … in and
+the where clauses. Here is an example computing the area of a circle
+with a given diameter with the two constructs</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ot">areaCircle ::</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>areaCircle diameter <span class="ot">=</span> <span class="fu">pi</span> <span class="op">*</span> radius<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> radius <span class="ot">=</span> diameter <span class="op">/</span> <span class="dv">2</span></span></code></pre></div>
+<p>translated to (something that looks like) java, this would be</p>
+<p>public static float areaCircle(float diameter) { final float radius =
+diameter / 2; return pi * radius^2; }</p>
+<p>radius is an intermediate value in the function, not in the scope of
+the file</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; radius</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Variable not in scope: radius</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; areaCircle 2</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3.1415927</span></span></code></pre></div>
+<p>/! the where clause requires indentation; further, you can define
+multiple intermediate values with where clauses, but they must be
+indented at the same level, like so</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>exampleFunction6 x <span class="ot">=</span> y <span class="op">+</span> z</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> y <span class="ot">=</span> x <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">=</span> x <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>OK now the example of the area with a let in to round out the
+file</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ot">areaCircleLet ::</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>areaCircleLet diameter <span class="ot">=</span> <span class="kw">let</span> radius <span class="ot">=</span> diameter<span class="op">/</span><span class="dv">2</span> <span class="kw">in</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">pi</span> <span class="op">*</span> radius<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; areaCircleLet 2</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3.1415927</span></span></code></pre></div>
+<p>We will talk about types in more details in the next lecture. But to
+parse error messages, it might be helpful to mention the following. The
+type system supports <em>polymorphism</em>. It means certain expressions
+can take a type that can be instantiated in several ways.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t []</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- [] :: [a]</span></span></code></pre></div>
+<p>the type of [] contains a <em>type variable</em> a. This means that
+[] could have any type obtained by substituting a for anything. I.e., we
+have for instance</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ([] :: [Bool])</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ([] :: [Bool]) :: [Bool]</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ([] :: [Int])</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ([] :: [Int]) :: [Int]</span></span></code></pre></div>
+<p><a href="index.html">Back to index</a></p>
+<footer>
+  <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>
+      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://glitchbra.in">⊳</a>
+</footer>
+</body>
+</html>
+
+<script>
+  function randInt(bound){
+    return Math.floor(Math.random() * bound);
+  }
+
+  var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
+  var bgColor = bgColors[randInt(bgColors.length)];
+  document.querySelector('body').style.background = '#' + bgColor;
+// Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
+// Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
+// quoi.
+</script>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title>types</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><a href="index.html">Back to index</a></p>
+<h1 id="a-short-introduction-to-haskells-type-system">A short
+introduction to haskell’s type system</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Prelude</span> <span class="kw">hiding</span> (id)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.List</span> (delete)</span></code></pre></div>
+<h2 id="introduction">Introduction</h2>
+<p>In haskell, every expression e has some type(s) T, which we often
+write like this:</p>
+<p>e :: T</p>
+<p>Here, an expression can be a value or a function (once again, as a
+functional programming language, haskell blurs the frontier between what
+is a function or a value - functions are regarded as values of a
+particular type)</p>
+<p>Here are some examples that we have already seen</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span><span class="ot"> ::</span> <span class="dt">Bool</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span><span class="ot"> ::</span> <span class="dt">Int</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">12</span><span class="ot"> ::</span> <span class="dt">Int</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>]<span class="ot"> ::</span> [<span class="dt">Int</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>[<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;aa&quot;</span>]<span class="ot"> ::</span> [<span class="dt">String</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>[[<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>], [<span class="st">&quot;aaaa&quot;</span>]]<span class="ot"> ::</span> [[<span class="dt">String</span>]]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span><span class="ot"> ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<p>Much like other programming types can be regarded as sets of programs
+with some expected behaviour, which can often be summarized as “does not
+lead to some crash or very weird behaviour when put together with things
+of a compatible type”.</p>
+<p>In haskell, all types are determined <em>statically</em>, which means
+at compile-time, much like Java. It means that, unlike in Python which
+has dynamical typing: * type representations do not pollute the runtime
+* there can be no type errors while a compiled program runs</p>
+<h2 id="some-basic-type-constructors">Some basic type constructors</h2>
+<ul>
+<li><code>Bool</code>: boolean values, contain True and False</li>
+<li><code>[Bla]</code>: lists of values of type Bla. The fundamental
+constructors for this type are the empty list <code>[]</code> and the
+(:) operator which allows to build a list by defining the element x ::
+Bla in front (colloquially called the <em>head</em>) and the rest of the
+list xs :: [Bla] (colloquially called the tail)</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; True : False : []</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- [True,False]</span></span></code></pre></div>
+<p>/! the square brackets have a different meaning in code and in type
+annotations. In type annotation, it means “I want to talk about a type
+of lists”. In code this means “I am defining/analyzing a list via…”. It
+is simply a peculiarity of haskell that some notations like square
+brackets are used both in code and in types for similar things; some
+other programming languages like OCaml make those two things more
+distinctive (by calling the type of lists of Bla something like
+<code>List Bla</code> essentially).</p>
+<p>In general the moral of this story is <strong>types and code/values
+live in separate worlds</strong>. <strong>Never mix types and values in
+this language</strong>.</p>
+<ul>
+<li><code>Char</code>: characters</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t &#39;c&#39;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- &#39;c&#39; :: Char</span></span></code></pre></div>
+<ul>
+<li><code>Int</code>: fixed-width integers</li>
+<li><code>Integer</code>: arbitrary sized integers (“bigints”)</li>
+<li><code>String</code>: string types; in haskell, String = [Char],
+although there is a special notation for literals</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; &#39;h&#39; : &#39;i&#39; : []</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &quot;hi&quot;</span></span></code></pre></div>
+<p>Here might be a good place to mention that one may define constants
+as well as function in haskell file, using the same kind of notation.
+This can be useful sometimes with strings if you have e.g. a piece of
+text/special characters you are going to be using a lot.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">upRightCorner ::</span> <span class="dt">String</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>upRightCorner <span class="ot">=</span> <span class="st">&quot;┏&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ot">leftRight ::</span> <span class="dt">String</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>leftRight <span class="ot">=</span> <span class="st">&quot;━&quot;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ot">somePath ::</span> <span class="dt">String</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>somePath <span class="ot">=</span> upRightCorner <span class="op">++</span> <span class="fu">concat</span> (<span class="fu">replicate</span> <span class="dv">3</span> leftRight)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ot">hWMsg ::</span> <span class="dt">String</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>hWMsg <span class="ot">=</span> <span class="st">&quot;Hello world!&quot;</span></span></code></pre></div>
+<ul>
+<li><code>(Foo, Bar)</code>: pairs of elements of type Foo and Bar</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (True, &quot;aaa&quot;)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- (True, &quot;aaa&quot;) :: (Bool, String)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (&quot;aa&quot;, &quot;aa&quot;)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- (&quot;aa&quot;, &quot;aa&quot;) :: (String, String)</span></span></code></pre></div>
+<p>This can be generalized to tuples of arbitrary length</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ()</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- () :: ()</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (&quot;aa&quot;, &quot;aa&quot;, True)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- (&quot;aa&quot;, &quot;aa&quot;, True) :: (String, String, Bool)</span></span></code></pre></div>
+<h2 id="function-types">Function types</h2>
+<p>Given types I and O, one can form the function type I -&gt; O using
+the -&gt; notation, meant to evoque an arrow as in mathematical
+notation. We have seen how to define function values using definitions
+in files and how to apply them, so let us not rehash that here; we are
+going to see fancier ways of defining functions later on when discussing
+higher-order functions such as these kind of monsters:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>functionDefinedInAPointFreeManner <span class="ot">=</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  (<span class="op">&gt;</span> <span class="dv">56</span>) <span class="op">.</span> (\z <span class="ot">-&gt;</span> z <span class="ot">`div`</span> <span class="dv">59</span> <span class="op">+</span> <span class="dv">67</span> <span class="ot">`mod`</span> z)</span></code></pre></div>
+<p>We have also seen functions which have multiple arguments that can
+have types I1 -&gt; … -&gt; In -&gt; O. Under the hood, there is
+something that we will notice again later: this is actually a nesting of
+the basic binary operator -&gt;, with the rightmost parentheses. That
+means that implicitly, we have that</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<p>actually is syntactic sugar for</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>)</span></code></pre></div>
+<p>and the <code>-&gt;</code> operator is viewed as any other elementary
+type constructor like tupling as far as the type system is
+concerned.</p>
+<p>The type</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="dt">Int</span>, <span class="dt">Int</span>) <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<p>is also a type of functions with two arguments, but coded with tuples
+and is <strong>not</strong> the same type, although it is morally the
+same. Going between the two types is called curryfication and
+uncurryfication, the arrowful type being the curryfied form. In
+functional style, we tend to like better function written in a currified
+form, for reasons that we will explain later.</p>
+<p>Since -&gt; is a basic type constructor, types such as [(Bool -&gt;
+Bool, Bool)] are perfectly legal, and may even correspond to real
+things</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="op">:</span>t [(<span class="fu">not</span>, <span class="dt">True</span>)]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>[(<span class="fu">not</span>, <span class="dt">True</span>)]<span class="ot"> ::</span> [(<span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>, <span class="dt">Bool</span>)]</span></code></pre></div>
+<p>We will have further occasions to appreciate this in the future, with
+some actual consequences for programming in a functional style. But it
+is worth mentioning that part of the style of functional programming
+come from the fact that function types can be freely mixed with the
+other type constructors in a principled way, and a lot of the
+conventions such as the one for functions with multiple arguments being
+encoded with multiple arrows instead of tuple types also stem from
+this.</p>
+<h2 id="parametric-polymorphism">Parametric polymorphism</h2>
+<p>What makes haskell type system powerful is that expressions may
+actually have several types, including user-defined expressions.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">take</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span><span class="ot"> ::</span> [[<span class="dt">Int</span>]] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span><span class="ot"> ::</span> [<span class="dt">Bool</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span><span class="ot"> ::</span> <span class="dt">Float</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>[]<span class="ot"> ::</span> [<span class="dt">Int</span>]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>[]<span class="ot"> ::</span> [<span class="dt">Bool</span>]</span></code></pre></div>
+<p>This relies not on some ad-hock compiler definitions, a type
+hierarchy or some kind of template programming, but rather on
+<em>parametric polymorphism</em> based on the <em>Hindley-Milner</em>
+type system. The idea behind this is that we can have function types
+that quantify over types using <em>type variables</em>.</p>
+<p>Consider for instance the identity function (which returns its
+input).</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span> x <span class="ot">=</span> x</span></code></pre></div>
+<p>The identity can operate on any kind of data, be it numbers, lists,
+etc.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; id 5</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- 5</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; id True</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- True</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; id [[&quot;abc&quot;], [&quot;hh&quot;,&quot;jj&quot;]]</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- [[&quot;abc&quot;],[&quot;hh&quot;,&quot;jj&quot;]]</span></span></code></pre></div>
+<p>We can check its type via the :t or :type directive in ghci/hugs:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t id</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- id :: p -&gt; p</span></span></code></pre></div>
+<p>In a type, a lowercase identifier is called a <em>type variable</em>.
+They are supposed to denote any types. Here <code>p -&gt; p</code>
+should be read as “for every element with given type p, this is a
+function which returns something of type p”.</p>
+<p>Here are other examples:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t take</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- take :: Int -&gt; [a] -&gt; [a]</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t fst</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- fst :: (a, b) -&gt; a</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t snd</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- snd :: (a, b) -&gt; b</span></span></code></pre></div>
+<p>Below is an example of a custom polymorphic function definition,
+along with its type signature.</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ot">delta ::</span> b <span class="ot">-&gt;</span> (b, b)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>delta x <span class="ot">=</span> (x, x)</span></code></pre></div>
+<p>The type should be read as “for every b, this function takes a b and
+returns a pair of bs”. We can check it works out of the box with all
+datatypes.</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; delta 3</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (3,3)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; delta &quot;Hello&quot;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- (&quot;Hello&quot;,&quot;Hello&quot;)</span></span></code></pre></div>
+<p>In all scenarios, the exact same piece of code is ran.</p>
+<p>Note that there is almost a <em>most general type</em> associated to
+a function, and unless you are doing some rather unorthodox things with
+typeclasses, haskell interpreters/compilers will be able to guess them.
+You can try it out for yourself by typing definitions without the
+accompanying type signature and see what haskell tells you.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>guessMyPolymorphicType x y <span class="ot">=</span> (x,x,y)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t guessMyPolymorphicType</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- guessMyPolymorphicType :: b -&gt; c -&gt; (b, b, c)</span></span></code></pre></div>
+<p>It is also possible to give a type annotation to a polymorphic
+function which is not the most general possible. If you do so, the
+typechecker won’t complain as long as you are consistent with the most
+general type, and will restrict your function to the types you
+specified.</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ot">fstVectorInt ::</span> (<span class="dt">Int</span>, <span class="dt">Int</span>) <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>fstVectorInt x <span class="ot">=</span> <span class="fu">fst</span> x</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; fstVectorInt (2,2)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- 2</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; fstVectorInt (True, False)</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Couldn&#39;t match expected type `Int&#39; with actual type `Bool&#39;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: False</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the first argument of `fstVectorInt&#39;, namely `(True, False)&#39;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: fstVectorInt (True, False)</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Couldn&#39;t match expected type `Int&#39; with actual type `Bool&#39;</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: True</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the first argument of `fstVectorInt&#39;, namely `(True, False)&#39;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- In the expression: fstVectorInt (True, False)</span></span></code></pre></div>
+<h2 id="type-classes">Type classes</h2>
+<p>Sometimes, it is useful to have a common syntax for operations that
+have a similar meaning but operate on different datatypes. For instance,
+one may want to be able to use the same symbol for addition of integer
+numbers (be they fixed-width or bigints) and floating point numbers.</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="op">:</span>t  (<span class="dv">5</span><span class="ot"> ::</span> <span class="dt">Int</span>) <span class="op">+</span> <span class="dv">6</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">5</span><span class="ot"> ::</span> <span class="dt">Int</span>) <span class="op">+</span> <span class="dv">6</span><span class="ot"> ::</span> <span class="dt">Int</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="op">:</span>t (<span class="fl">5.2</span><span class="ot"> ::</span> <span class="dt">Double</span>) <span class="op">+</span> <span class="dv">2</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>(<span class="fl">5.2</span><span class="ot"> ::</span> <span class="dt">Double</span>) <span class="op">+</span> <span class="dv">2</span><span class="ot"> ::</span> <span class="dt">Double</span></span></code></pre></div>
+<p>On the other hand, we cannot add lists of numbers together</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> ([<span class="dv">8</span>] <span class="op">+</span> [])</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Num</span> [<span class="dt">Integer</span>]) arising from a use <span class="kw">of</span> <span class="ot">`it_a2BVU&#39;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ot">In the first argument of `</span>evalPrint&#39;, namely <span class="ot">`it_a2BVU&#39;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="ot">In a stmt of an interactive GHCi command: evalPrint it_a2BVU</span></span></code></pre></div>
+<p>Another example is the (==) operator, that can be used on a variety
+of datatypes, but certainly not all.</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> [[<span class="dv">1</span>,<span class="dv">1</span>]] <span class="op">==</span> [[<span class="dv">1</span>],[<span class="dv">1</span>]]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="fu">take</span> <span class="op">==</span> <span class="fu">drop</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Eq</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                   (<span class="dt">Int</span> <span class="ot">-&gt;</span> [a0_a2C4S[tau<span class="op">:</span><span class="dv">1</span>]] <span class="ot">-&gt;</span> [a0_a2C4S[tau<span class="op">:</span><span class="dv">1</span>]]))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  arising from a use <span class="kw">of</span> <span class="ot">`==&#39;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="ot">  (maybe you haven&#39;t applied a function to enough arguments?)</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="ot">In the expression: take == drop</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="ot">In an equation for `</span>it_a2C3T&#39;<span class="op">:</span> it_a2C3T <span class="ot">=</span> <span class="fu">take</span> <span class="op">==</span> <span class="fu">drop</span></span></code></pre></div>
+<p>These are instances of what is called <em>ad-hoc polymorphism</em>
+and is similar in flavour with the way operator overloading is done with
+languages like java or python, but with a more flexible mechanism than
+messing with a rigid object-oriented hierarchy. The way haskell does it
+is that it allows to define so called <strong>type classes</strong>
+which are essentially a signature for a bunch of operation parameterized
+by a bunch of type variables.</p>
+<p>Let us walk through the example of the type class that provides the
+ability to use equality. It is called Eq and is defined as follows in
+haskell (this is commented not to shadow the official definition, and
+actually the actual definition is a bit fancier, but we can pretend it
+is the definition for now):</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Eq</span> a <span class="kw">where</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  (==) ::</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span></code></pre></div>
+<p>These two lines say: a type <code>Bla</code> belongs to the typeclass
+<code>Eq</code> if <em>someone</em> provides an operation
+<code>(==) :: Bla -&gt; Bla -&gt; Bool</code> and explicitly says this
+is tied to the typeclass Eq. Note that this does not create any function
+or any type; it simply declares that the typeclass exists and allows to
+then provide implementation. The way to do so for, say,
+<code>a = Bool</code> is to write</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Bool</span> <span class="kw">where</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  (<span class="op">==</span>) b c <span class="ot">=</span> b <span class="op">&amp;&amp;</span> c <span class="op">||</span> <span class="fu">not</span> b <span class="op">&amp;&amp;</span> <span class="fu">not</span> c</span></code></pre></div>
+<p>This is called a <strong>typeclass instance</strong>. After this
+declaration, if the haskell compiler sees a statement like
+<code>True == False</code>, it would use the above function for the
+implementation of <code>(==)</code>. For this to make sense, haskell
+also ensures each type can have at most one typeclass instance per
+typeclass.</p>
+<p>Here is another example: the Show typeclass that is about types that
+can be converted to strings (note in passing that the difference between
+operators and functions is only one of notation; for haskell these are
+the same kind of object, and one can convert between the two viewpoints
+using either parentheses or backticks):</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Show</span> a <span class="kw">where</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  show ::</span> a <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Show</span> <span class="dt">Bool</span> <span class="kw">where</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show</span> b <span class="ot">=</span> <span class="kw">if</span> b <span class="kw">then</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;True&quot;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>           <span class="kw">else</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;False&quot;</span></span></code></pre></div>
+<p>There are fancier ways of defining typeclasses and instances tha make
+the system very powerful and used throughout all haskell libraries; you
+should not have to explore how to define custom classes and instances
+for this module, but since haskell provides a lot of default typeclasses
+and instances, you should know how to use the provided instances and to
+type functions that use them.</p>
+<p>Let us consider an example: the function delete from the Data.List
+module shipped with your haskell installation. It takes two inputs,
+which may be for instance an integer and a list of integers, and returns
+a list of integers where the first occurence of the integer is
+deleted.</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> delete <span class="dv">3</span> [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>]</span></code></pre></div>
+<p>Without going into details, it should be fairly clear that * the
+implementation of this can be generalized to types other than integers,
+such as Char. Which is nice for string operations for instance</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> delete <span class="ch">&#39;e&#39;</span> <span class="st">&quot;Hello&quot;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Hllo&quot;</span></span></code></pre></div>
+<ul>
+<li>however, one cannot do this for all datatypes; we need the ability
+to compare the first argument for equality with the elements within the
+second argument. Hence, the type of these arguments should have a
+typeclass for Eq. We can check we may get into issues if they don’t,
+like in the following example (OK the example is a bit contrived; a lot
+of types in haskell have an instance for <code>Eq</code> :))</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="fu">head</span> (delete <span class="fu">take</span> [<span class="fu">drop</span>]) <span class="dv">1</span> []</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Eq</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> [()] <span class="ot">-&gt;</span> [()]))</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  arising from a use <span class="kw">of</span> <span class="ot">`it_a2CaO&#39;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  (maybe you haven&#39;t applied a function to enough arguments?)</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="ot">In the first argument of `</span>evalPrint&#39;, namely <span class="ot">`it_a2CaO&#39;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="ot">In a stmt of an interactive GHCi command: evalPrint it_a2CaO</span></span></code></pre></div>
+<p>So to capture these two things, the fact that the input type could be
+anything, but that the type of delete requires an instance of Eq, it is
+written this way:</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="op">:</span>t delete</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ot">delete ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span></code></pre></div>
+<p><em>Before</em> the part of the polymorphic type
+<code>a -&gt; [a] -&gt; [a]</code> that says what the function does, we
+add a <strong>typeclass constraint</strong> <code>Eq a =&gt;</code> that
+says that there should be an instance of Eq for a. So the informal way
+to read such a type would be to say: this is a function such that * for
+every a (quantify over the type variables) * that have an instance for
+Eq (relativize wrt the typeclass constraints) * this takes an argument
+of type a, an argument of type [a] and returns an value of type [a]</p>
+<p>In particular, =&gt; <strong>is not the same thing as</strong>
+-&gt;!! Count only the -&gt; arrows if you want to figure out the number
+of arguments to a function.</p>
+<p>Let us look at how it is done in a custom example which takes three
+arguments</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ot">inOrder ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>inOrder x y z <span class="ot">=</span> x <span class="op">&lt;</span> y <span class="op">&amp;&amp;</span> y <span class="op">&lt;</span> z</span></code></pre></div>
+<p>Here the Ord typeclass shows up to allow the use of the (&lt;)
+operator.</p>
+<p>In some scenarios, one may need several typeclass constraints; let us
+give some example of the syntax needed in type annotations:</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleWithNumAndOrd ::</span> (<span class="dt">Ord</span> a, <span class="dt">Num</span> a) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>exampleWithNumAndOrd x <span class="ot">=</span> x <span class="op">*</span> x <span class="op">&gt;</span> x</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleWithALotOfTypeclassConstraints ::</span> (<span class="dt">Show</span> a, <span class="dt">Ord</span> a, <span class="dt">Num</span> a, <span class="dt">Read</span> a) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> (<span class="dt">String</span>, <span class="dt">Bool</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>exampleWithALotOfTypeclassConstraints x <span class="ot">=</span> (<span class="fu">show</span> x, <span class="fu">read</span> <span class="st">&quot;3&quot;</span> <span class="op">*</span> x <span class="op">&gt;</span> x)</span></code></pre></div>
+<p>Regarding the typeclasses that are provided with haskell, you should
+probably get familiar with the following during the term:</p>
+<ul>
+<li><p>Num is the typeclass that provides basic numerical operations
+like (+), (-) (*), as well as conversion functions from numerals. That
+is the reason why numerals in ghci have type Num a =&gt; a: they are of
+any type a that can be converted to a Num (much like the empty list is a
+list of any type [a])</p></li>
+<li><p>Eq is the typeclass that provide operators (==) and (/=) that
+stand for equality and inequality</p></li>
+<li><p>Ord is the typeclass that provides comparison operators (&gt;),
+(&gt;=), …</p></li>
+<li><p>Show provides a conversion function from the parameter type to
+strings. In particular it is used in the interactive prompt to display
+values! That is why you may have errors mentioning Show if you try to
+ask ghci about values that have no obvious representations as strings
+(such as function types): it is not that the value does not exist or is
+illegal, but simply that ghci does not know how to print it because
+there is no instance of Show for the type.</p></li>
+<li><p>Read provides the converse functionality to Show, i.e. the
+ability to parse a string representation into your favorite
+value.</p></li>
+<li><p>Enum provides facilities to enumerate all values of a type. This
+is what work under the hood of the .. notation for lists.</p></li>
+</ul>
+<p>Here is one of the main function, which gives the “next element” in a
+list</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="op">:</span>t <span class="fu">succ</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">succ</span><span class="ot"> ::</span> <span class="dt">Enum</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">enumFromTo</span><span class="ot"> ::</span> <span class="dt">Enum</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [a]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">enumFromTo</span> x y <span class="ot">=</span> [x <span class="op">..</span> y]</span></code></pre></div>
+<h2 id="type-annotations">Type annotations</h2>
+<p>In some rare cases, the typechecker will be unable to infer a type
+for a haskell expression due to either very tricky code with
+typeclasses, or because of some language extensions (not applicable to
+the module). In those case, it is possible to help the typechecker by
+asking that a given subexpression have a particular type using the ::
+notation within a definition. Here is a (bogus) example:</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>aConstant <span class="ot">=</span> (<span class="dv">4</span><span class="ot"> ::</span> <span class="dt">Int</span>) <span class="op">+</span> <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="op">:</span>t aConstant</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ot">aConstant ::</span> <span class="dt">Int</span></span></code></pre></div>
+<p>Without the type annotation in the function, this would have turned
+into a <code>Num a =&gt; a</code>.</p>
+<h2 id="practice-in-ghcivscodehoogle">Practice: in
+ghci/VSCode/Hoogle</h2>
+<p>The type system helps writting haskell programs in the sense that it
+filters out programs that carry dreadful runtime errors in other
+languages while also offering enough expressiveness to not crush users
+under bureaucracy (hopefully).</p>
+<p>Now <em>understanding</em> the type system helps you: * understand
+the errors the compilers/interpreters print out. All errors that are not
+runtime or syntax errors are type errors, and typically the haskell tool
+do there best to assume your programs can typecheck, and try to provide
+an explanation when they can’t figure out a valid type for all
+expressions. Sometimes these explanations are a bit complex and will
+mention type variables and typeclasses, because the tools try really
+hard! Do try to look first at the line number and location of the error,
+and then the reasoning offered by the tools to try to understand what
+might be wrong</p>
+<ul>
+<li><p>you can then ask what is the type of an expression expr by typing
+:t expr in ghci, or hovering over it in VSCode if you have the haskell
+plugin and HLS installed and and gain useful information from the
+type</p></li>
+<li><p>on <a href="https://hoogle.haskell.org">Hoogle</a>, you can
+search for haskell functions and their documentations by providing
+either their name or their types. This is very useful e.g. if you think
+the base install should provide some basic function that you don’t know
+the name but can guess the interface of!</p></li>
+</ul>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"></code></pre></div>
+<p><a href="index.html">Back to index</a></p>
+<footer>
+  <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>
+      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://glitchbra.in">⊳</a>
+</footer>
+</body>
+</html>
+
+<script>
+  function randInt(bound){
+    return Math.floor(Math.random() * bound);
+  }
+
+  var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
+  var bgColor = bgColors[randInt(bgColors.length)];
+  document.querySelector('body').style.background = '#' + bgColor;
+// Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
+// Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
+// quoi.
+</script>

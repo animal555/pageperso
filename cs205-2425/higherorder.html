@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title>higherorder</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><a href="index.html">Back to index</a></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Prelude</span> <span class="kw">hiding</span> (map, filter, (.), ($))</span></code></pre></div>
+<h1 id="higher-order-functions">Higher-order functions</h1>
+<p><em>Higher-order function</em> are simply functions that take other
+functions as argument. Here is an example of such a higher-order
+function, which takes as input a function, an integer, and outputs an
+integer.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">divides ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>divides x y <span class="ot">=</span> y <span class="ot">`mod`</span> x <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">applyToSucc ::</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> a</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>applyToSucc f x <span class="ot">=</span> f (x <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>&gt;&gt;&gt; let g x = x * 2 in applyToSucc g 2
+6
+
+&gt;&gt;&gt; applyToSucc ((+) 1) 2
+4
+
+&gt;&gt;&gt; applyToSucc show 2
+&quot;3&quot;
+
+&gt;&gt;&gt; applyToSucc (divides 2) 3
+True</code></pre>
+<p>There are a lot of higher-order functions in the standard library,
+and combining the ability of defining higher-order function with
+polymorphism allow to write very powerful generic code. In this file, we
+will explore some examples and also introduce useful syntax to define
+functions in a very succint way.</p>
+<h2 id="basics-and-examples">Basics and examples</h2>
+<p>A higher-order function is just one that take another function as
+input - nothing more, nothing less. They can also be recursive or
+polymorphic like any other function.</p>
+<p>Here is for instance another example of a higher-order function that
+iters its input function a number of times.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">iter ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>iter f <span class="dv">0</span> x <span class="ot">=</span> x</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>iter f n x <span class="ot">=</span> iter f (n <span class="op">-</span> <span class="dv">1</span>) (f x)</span></code></pre></div>
+<pre><code>&gt;&gt;&gt; iter ((+) 1) 2 3
+5
+
+&gt;&gt;&gt; iter tail 3 [1 .. 10]
+[4,5,6,7,8,9,10]</code></pre>
+<p>Here note that the function is * higher-order, because the first
+argument has type a -&gt; a * polymorphic, because its type contains a
+type variable * recursive, because it calls itself in its second
+line</p>
+<p>In contrast, the first function applyToSucc is higher-order, but not
+polymorphic and not recursive.</p>
+<p>Here is another example, which is recursive, higher-order, but not
+polymorphic: it tries to compute the least integer satisfying a
+predicate (here by “a predicate over (a type) T” I only mean a function
+T -&gt; Bool):</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">leastIntSuchThat ::</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>leastIntSuchThat p <span class="op">|</span> p <span class="dv">0</span>       <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                   <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="dv">1</span> <span class="op">+</span> leastIntSuchThat (applyToSucc p)</span></code></pre></div>
+<pre><code>&gt;&gt;&gt; leastIntSuchThat ((&lt;) 5)
+6</code></pre>
+<p>Note that here to use higher-order function, I use the fact that
+haskell encodes function of multiple arguments as functions that return
+other functions and partial application. Here for instance, (&lt;) is a
+function that takes 2 arguments and returns a boolean, which can be
+given the following type:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span></code></pre></div>
+<p>which is implicitly the same as</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>)</span></code></pre></div>
+<p>so <code>(&lt;) 5</code> has type <code>Int -&gt; Bool</code>.</p>
+<p>This use of partial application with higher-order functions is
+actually the reason why we prefer to encode functions with multiple
+arguments in this way in Haskell rather than use tupling most of the
+time. (terminological remark: a higher-order function is a function
+which has a function as <em>argument</em>, not a function that returns
+another function; so (+) and (&lt;) are not higher-order because they
+output a function when partially applied).</p>
+<p>Incidentally, some other standard example of higher-order functions
+is also given by this operation that converts between these two
+representation of functions in multiple arguments.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curry</span><span class="ot"> ::</span> ((a, b) <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curry</span> f x y <span class="ot">=</span> f (x, y)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">uncurry</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> ((a, b) <span class="ot">-&gt;</span> c)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">uncurry</span> f (x, y) <span class="ot">=</span> f x y</span></code></pre></div>
+<h2 id="λ-expressions-and-sections">λ-expressions and sections</h2>
+<p>Once we have access to higher-order function, one issue you might run
+across is how to use them in a non-awkward way. Up to now, only a couple
+of ways were explicitly available to you: using already existing
+function, defined by yourself or the standard library, or by partially
+applying such a definition. You can also make those definitions locally
+using a <code>where</code> clause or a <code>let in</code> expression,
+but that is not much more flexible. One issue that can come up fairly
+quickly for instance is: I want to use a function of two arguments
+partially applied, like <code>divides</code> above, but I want to
+partially apply the second argument. Below is an example of how awkward
+this can be:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ot">awkwardWhere ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>awkwardWhere a b <span class="ot">=</span> leastIntSuchThat g <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">where</span> f x <span class="ot">=</span> a <span class="ot">`divides`</span> x <span class="op">&amp;&amp;</span> b <span class="ot">`divides`</span> x</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         g y <span class="ot">=</span> f (y <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>awkwardWhere 4 6 10</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>One useful construct to do this without having to do a where clause
+is λ-expressions. Those are a way of defining functions without having
+to give them names. The syntax</p>
+<p><code>\ arg1 arg2 ... -&gt; (body of the function)</code></p>
+<p>denotes a functions, which names its arguments arg1, arg2, … (those
+should be lowercase variables as usual) and maps them to whatever is
+descibed in the body. We can check that this works on a few
+examples:</p>
+<pre><code>&gt;&gt;&gt; (\x -&gt; x) 10
+10
+
+&gt;&gt;&gt; (\x -&gt; (x + 6, x + 5)) 2
+(8,7)
+
+&gt;&gt;&gt; (\x y -&gt; (x - y)^2) 2 3
+1
+
+&gt;&gt;&gt;  leastIntSuchThat (\z -&gt; divides 5 (z+1))
+4
+
+&gt;&gt;&gt; (\xs z -&gt; head (tail (tail xs)) + z) [1..10] 2
+5</code></pre>
+<p>And now we can make our example into a one-liner (also please never
+re-implement LCM in this way, it’s just an example to show off
+syntax).</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleLambda ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>exampleLambda a b <span class="ot">=</span> leastIntSuchThat (\x <span class="ot">-&gt;</span> a <span class="ot">`divides`</span> (x <span class="op">+</span> <span class="dv">1</span>) <span class="op">&amp;&amp;</span> b <span class="ot">`divides`</span> (x <span class="op">+</span> <span class="dv">1</span>)) <span class="op">-</span> <span class="dv">1</span></span></code></pre></div>
+<p>Lambdas can be very flexible and useful when small alteration are
+needed, but be careful as they can get unreadable fairly quickly! The
+reason why they are called lambdas is due to the connection of
+functional programming with a mathematical formalism called the
+λ-calculus, which is essentially an algebraic theory of mathematical
+functions which also happens to be a fundamental object in theoretical
+computer science. The  character is essentially meant to be an ASCII
+representation of the λ notation historically used.</p>
+<p>Another nice syntactic construct that is handy for using higher-order
+functions quickly is given by <em>sections</em> which is a handy way of
+partially applying binary operator to arguments. The idea is that, if
+one has any infix operator, such as +, *, or
+<code>functionNameSurroundedByBackquotes</code>, the following
+expressions are desugared in this way:</p>
+<ul>
+<li><p><code>(⊗ x)</code> is the same as
+<code>\ z -&gt; z ⊗ x</code></p></li>
+<li><p><code>(x ⊗)</code> is the same as
+<code>\ z -&gt; x ⊗ z</code></p></li>
+</ul>
+<p>Here are some examples</p>
+<pre><code>&gt;&gt;&gt; (+ 1) 2
+3
+
+&gt;&gt;&gt; (&lt; 3) 1
+True
+
+&gt;&gt;&gt; (3 &lt;) 1
+False</code></pre>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ot">append ::</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>append x <span class="ot">=</span> (<span class="op">++</span> [x])</span></code></pre></div>
+<pre><code>&gt;&gt;&gt; (`divides` 2) 3
+False</code></pre>
+<h2 id="useful-examples">Useful examples</h2>
+<p>For better or worse, there are plenty of examples of useful
+higher-order function in the standard library, and there is not enough
+time to cover all of them in excruciating details in the lecture. So
+below are maybe some of the more useful examples that you may come
+across.</p>
+<ul>
+<li>A couple fundamental examples are composition of function and
+application that are already defined in the prelude; you probably won’t
+use them too much at first, but if you end up writing complicated
+programs, they tend to become useful combinators. Application ($) sounds
+fairly useless at first, but it is actually useful once you get
+comfortable with how haskell expressions are parenthesized by default by
+the compiler because it allows to write complex code with fewer
+parentheses.</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ot">($) ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> b</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">$</span> x <span class="ot">=</span> f x</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ot">(.) ::</span> (b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> c</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>(<span class="op">.</span>) f g x <span class="ot">=</span> f (g x)</span></code></pre></div>
+<ul>
+<li>Over lists, and more generally over datatypes that can hold data of
+generic types, there are quite a few very useful utility functions. A
+fundamental one is the map function that allows you to relabel element
+of a list.</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [b]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span> f [] <span class="ot">=</span> []</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span> f (x <span class="op">:</span> xs) <span class="ot">=</span> f x <span class="op">:</span> <span class="fu">map</span> f xs</span></code></pre></div>
+<pre><code>&gt;&gt;&gt; map (+1) [1..5]
+[2,3,4,5,6]
+
+&gt;&gt;&gt; map (\z -&gt; [z, z] ++ [1]) [2..3]
+[[2,2,1],[3,3,1]]</code></pre>
+<p>Another useful thing one can do with lists is filtering the elements
+according to a predicate.</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span> p [] <span class="ot">=</span> []</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span> p (x <span class="op">:</span> xs) <span class="op">|</span> p x <span class="ot">=</span> x <span class="op">:</span> <span class="fu">filter</span> p xs</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="fu">filter</span> p xs</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="dv">5</span></span></code></pre></div>
+<pre><code>&gt;&gt;&gt; filter (3 `divides`) [1..10]
+[3,6,9]
+
+&gt;&gt;&gt; filter ((2 `divides`) . length ) [[1..10], [1..3], [1..5], [2 .. 9]]
+[[1,2,3,4,5,6,7,8,9,10],[2,3,4,5,6,7,8,9]]</code></pre>
+<p>There are a lot of other examples in the standard library, such as
+for instance</p>
+<pre><code>&gt;&gt;&gt; :t zipWith
+zipWith :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c]
+
+&gt;&gt;&gt; :t (concatMap :: (a -&gt; [b]) -&gt; [a] -&gt; [b])
+(concatMap :: (a -&gt; [b]) -&gt; [a] -&gt; [b]) :: (a -&gt; [b]) -&gt; [a] -&gt; [b]
+
+&gt;&gt;&gt; :t (all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool)
+(all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool) :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+
+&gt;&gt;&gt; :t (any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool)
+(any :: (a -&gt; Bool) -&gt; [a] -&gt; Bool) :: (a -&gt; Bool) -&gt; [a] -&gt; Bool</code></pre>
+<p>You should not try to learn all of those by heart! You can easily
+find them in the documentation through <a
+href="hoogle">https://hoogle.haskell.org</a> if you search them by type.
+If you feel that there is a generic function over lists that you would
+like to use, it is rather likely that it is already defined in the base
+that comes with haskell, either directly in the prelude module that is
+already loaded or in Data.List.</p>
+<h2 id="optional-terminological-details">(optional) terminological
+details</h2>
+<p>A function that is not higher-order is sometimes called
+<em>first-order</em> in contrast. In fact there is an inductive way to
+“count” the order of an Haskell definition (you don’t need to remember
+that) according to its type:</p>
+<ul>
+<li><p>a constant type like Bool has order 0</p></li>
+<li><p>a type <code>A -&gt; B</code> has order either (1 + order of A)
+or (order of B), whichever is greater</p></li>
+</ul>
+<p>So in particular, most functions we have seen so far such as (+),
+head or tail have order 1, an the examples above have order 2. It is
+fairly rare to see <em>explicit</em> examples of functions of higher
+order in every day programming, although they might implicitly hide
+behind some of the more convenient abstraction we are going to see
+later.</p>
+<p>Just for fun, here is an example of a very very higher-order
+function, that is actually used in actual real-world piece of code,
+essentially as an extremely powerful exception handling mechanism; the
+first line “type C a r” actually defines a type alias (otherwise the
+types get unreadable too quickly).</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">C</span> a r <span class="ot">=</span> (a <span class="ot">-&gt;</span> r) <span class="ot">-&gt;</span> r</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ot">bindCont ::</span> <span class="dt">C</span> a r <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> <span class="dt">C</span> b r) <span class="ot">-&gt;</span> <span class="dt">C</span> b r</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>bindCont x f k <span class="ot">=</span> x (\y <span class="ot">-&gt;</span> f y k)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="ot">callCC ::</span> ((<span class="dt">C</span> a r <span class="ot">-&gt;</span> <span class="dt">C</span> b r) <span class="ot">-&gt;</span> <span class="dt">C</span> a r) <span class="ot">-&gt;</span> <span class="dt">C</span> a r</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>callCC c k <span class="ot">=</span> c (\g _ <span class="ot">-&gt;</span> g k) k</span></code></pre></div>
+<p>Unravelling the definitions, we can see that bindCont is an order-4
+function, while callCC is of order 5.</p>
+<p>(If you are wondering what they are useful for, you can try to look
+up “continuation-passing style transformations” (CPS) and/or ask me. CPS
+is a relatively advanced topic relevant to advanced functional
+programming and compilers, but essentially this is about program
+translation that allow to encode primitives that do exception handling
+and much more in a nice way)</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"></code></pre></div>
+<p><a href="index.html">Back to index</a></p>
+<footer>
+  <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>
+      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://glitchbra.in">⊳</a>
+</footer>
+</body>
+</html>
+
+<script>
+  function randInt(bound){
+    return Math.floor(Math.random() * bound);
+  }
+
+  var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
+  var bgColor = bgColors[randInt(bgColors.length)];
+  document.querySelector('body').style.background = '#' + bgColor;
+// Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
+// Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
+// quoi.
+</script>

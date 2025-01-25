@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title>index</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../static/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><a href="../index.html">go back</a></p>
+<p>Some of the files used alongside the lectures in the 2024 edition of
+the declarative programming module in Swansea. They mostly attempt to
+explain Haskell notions seen in the module as well as give examples,
+translated to html. While this is meant to cover most of the notions
+seen in the module (and more), those files are not quite exhaustive and
+probably should have been proofread a bit better :)</p>
+<ul>
+<li><p><a href="taster.html">a first taste of Haskell</a> (<a
+href="../cs205-2425-files/introduction.pdf">the relevant
+slides</a>)</p></li>
+<li><p><a href="types.html">the type system</a></p></li>
+<li><p><a href="conditionals.html">ifthenelse, pattern-matching and
+guarded equations</a></p></li>
+<li><p><a href="higherorder.html">higher-order functions</a></p></li>
+<li><p><a href="adt.html">type aliases, algebraic datatypes</a></p></li>
+<li><p><a href="ioExamples.html">interactive programs and
+side-effects</a></p></li>
+<li><p><a href="listComprehension.html">list comprehension</a></p></li>
+<li><p><a href="monadsAndLaziness.html">monads and laziness (not needed
+for the exam)</a> (<a href="../cs205-2425-files/iomonad.pdf">slides for
+monads</a>, <a href="../cs205-2425-files/laziness.pdf">for laziness and
+to close the FP part of the module</a>)</p></li>
+<li><p><a href="probabilityMonadExample.html">the finite probablity
+monad (not needed for the exam)</a></p></li>
+</ul>
+<p>You may find some of the additional files supporting the module that
+I can freely disseminate <a href="../cs205-2425-files">here</a>, as well
+as the <code>.hs</code> files that generated the webpages above.</p>
+<p><a href="../index.html">go back</a></p>
+<footer>
+  <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>
+      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://glitchbra.in">⊳</a>
+</footer>
+</body>
+</html>
+
+<script>
+  function randInt(bound){
+    return Math.floor(Math.random() * bound);
+  }
+
+  var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
+  var bgColor = bgColors[randInt(bgColors.length)];
+  document.querySelector('body').style.background = '#' + bgColor;
+// Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
+// Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
+// quoi.
+</script>
