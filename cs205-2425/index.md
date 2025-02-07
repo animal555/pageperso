@@ -1,35 +1,66 @@
 [go back](../index.html)
 
-Some of the files used alongside the lectures in the 2024 edition of the
-declarative programming module in Swansea. They mostly attempt to explain
-Haskell notions seen in the module as well as give examples, translated to html.
-While this is meant to cover most of the notions seen in the module (and more),
-those files are not quite exhaustive and probably should have been proofread a
-bit better :)
+[adt.hs](adt.hs)
 
+[adt.html](adt.html)
 
-* [a first taste of Haskell](taster.html) ([the relevant slides](../cs205-2425-files/introduction.pdf))
+[adt.md](adt.md)
 
-* [the type system](types.html)
+[conditionals.hs](conditionals.hs)
 
-* [ifthenelse, pattern-matching and guarded equations](conditionals.html)
+[conditionals.html](conditionals.html)
 
-* [higher-order functions](higherorder.html)
+[conditionals.md](conditionals.md)
 
-* [type aliases, algebraic datatypes](adt.html)
+[higherorder.hs](higherorder.hs)
 
-* [interactive programs and side-effects](ioExamples.html)
+[higherorder.html](higherorder.html)
 
-* [list comprehension](listComprehension.html)
+[higherorder.md](higherorder.md)
 
-* [monads and laziness (not needed for the exam)](monadsAndLaziness.html)
-           ([slides for monads](../cs205-2425-files/iomonad.pdf),
-            [for laziness and to close the FP part of the module](../cs205-2425-files/laziness.pdf))
+[htmlify.sh](htmlify.sh)
 
-* [the finite probablity monad (not needed for the exam)](probabilityMonadExample.html)
+[htmltemplate.html](htmltemplate.html)
 
-You may find some of the additional files supporting the module that I can
-freely disseminate [here](../cs205-2425-files), as well as the `.hs` files that
-generated the webpages above.
+[ioExamples.hs](ioExamples.hs)
 
-[go back](../index.html)
+[ioExamples.html](ioExamples.html)
+
+[ioExamples.md](ioExamples.md)
+
+[listComprehension.hs](listComprehension.hs)
+
+[listComprehension.html](listComprehension.html)
+
+[listComprehension.md](listComprehension.md)
+
+[Makefile](Makefile)
+
+[mdify.sh](mdify.sh)
+
+[monadsAndLaziness.hs](monadsAndLaziness.hs)
+
+[monadsAndLaziness.html](monadsAndLaziness.html)
+
+[monadsAndLaziness.md](monadsAndLaziness.md)
+
+[probabilityMonadExample.hs](probabilityMonadExample.hs)
+
+[probabilityMonadExample.html](probabilityMonadExample.html)
+
+[probabilityMonadExample.md](probabilityMonadExample.md)
+
+[style.css](style.css)
+
+[taster.hs](taster.hs)
+
+[taster.html](taster.html)
+
+[taster.md](taster.md)
+
+[types.hs](types.hs)
+
+[types.html](types.html)
+
+[types.md](types.md)
+

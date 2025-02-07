@@ -95,6 +95,10 @@ aspects of Monadic Second Order logic.
 
 # Preprints
 
+  *Weihrauch problems as containers*,
+     with Ian Price,
+     [arxiv](https://arxiv.org/abs/2501.17250)
+\
   *The equational theory of the Weihrauch lattice with (iterated) composition*,
      [arxiv](https://arxiv.org/abs/2408.14999)
 \
@@ -120,9 +124,9 @@ aspects of Monadic Second Order logic.
 
 # PhD/MRes students
 
-Olivia Weston (MRes defended in 2024)
-\
 [Ian Price](https://www.countingishard.org) (PhD, current)
+\
+Olivia Weston (MRes defended in 2024)
 
 # Slides from talks
 
@@ -188,4 +192,4 @@ enrolled in a module in Swansea, all you need should already be hosted on
 
 # Contact
 
-c.lastname@swansea.ac.uk or ceclastname@gmail.com
+c.lastname@swansea.ac.uk or firstname.lastname@ens-lyon.org
