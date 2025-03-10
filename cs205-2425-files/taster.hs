@@ -69,9 +69,11 @@ exampleFunction2 x y = fromIntegral x + y
 
 {-
    Several things of note:
+
    * now that we have multiple arguments, we have to provide names on the LHS
      for each one. x is the Int, y is the Float, and that is determined from the
      type signature.
+
    * fromIntegral is a function that is able to turn an Int into a Float. Its
      actual type is a bit spooky, but we can check it is the case with the
      following kind of query, which would just raise an error if this was wrong

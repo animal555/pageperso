@@ -151,12 +151,16 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a 
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ot">``` Now here is a similar function  with two arguments ```</span>haskell</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ot">exampleFunction2 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>exampleFunction2 x y <span class="ot">=</span> <span class="fu">fromIntegral</span> x <span class="op">+</span> y</span></code></pre></div>
-<p>Several things of note: * now that we have multiple arguments, we
-have to provide names on the LHS for each one. x is the Int, y is the
-Float, and that is determined from the type signature. * fromIntegral is
-a function that is able to turn an Int into a Float. Its actual type is
-a bit spooky, but we can check it is the case with the following kind of
-query, which would just raise an error if this was wrong</p>
+<p>Several things of note:</p>
+<ul>
+<li><p>now that we have multiple arguments, we have to provide names on
+the LHS for each one. x is the Int, y is the Float, and that is
+determined from the type signature.</p></li>
+<li><p>fromIntegral is a function that is able to turn an Int into a
+Float. Its actual type is a bit spooky, but we can check it is the case
+with the following kind of query, which would just raise an error if
+this was wrong</p></li>
+</ul>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t (fromIntegral :: Int -&gt; Float)</span></span>
@@ -269,53 +273,57 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>areaCircle diameter <span class="ot">=</span> <span class="fu">pi</span> <span class="op">*</span> radius<span class="op">^</span><span class="dv">2</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> radius <span class="ot">=</span> diameter <span class="op">/</span> <span class="dv">2</span></span></code></pre></div>
 <p>translated to (something that looks like) java, this would be</p>
-<p>public static float areaCircle(float diameter) { final float radius =
-diameter / 2; return pi * radius^2; }</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>   <span class="kw">public</span> <span class="dt">static</span> <span class="dt">float</span> <span class="fu">areaCircle</span><span class="op">(</span><span class="dt">float</span> diameter<span class="op">)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>     <span class="dt">final</span> <span class="dt">float</span> radius <span class="op">=</span> diameter <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>     <span class="cf">return</span> pi <span class="op">*</span> radius<span class="op">^</span><span class="dv">2</span><span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span></code></pre></div>
 <p>radius is an intermediate value in the function, not in the scope of
 the file</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; radius</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Variable not in scope: radius</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; areaCircle 2</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3.1415927</span></span></code></pre></div>
-<p>/! the where clause requires indentation; further, you can define
-multiple intermediate values with where clauses, but they must be
-indented at the same level, like so</p>
 <div class="sourceCode" id="cb16"><pre
 class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>exampleFunction6 x <span class="ot">=</span> y <span class="op">+</span> z</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> y <span class="ot">=</span> x <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">=</span> x <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
-<p>OK now the example of the area with a let in to round out the
-file</p>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; radius</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Variable not in scope: radius</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; areaCircle 2</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3.1415927</span></span></code></pre></div>
+<p>/!\ the where clause requires indentation; further, you can define
+multiple intermediate values with where clauses, but they must be
+indented at the same level, like so</p>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ot">areaCircleLet ::</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>areaCircleLet diameter <span class="ot">=</span> <span class="kw">let</span> radius <span class="ot">=</span> diameter<span class="op">/</span><span class="dv">2</span> <span class="kw">in</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">pi</span> <span class="op">*</span> radius<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; areaCircleLet 2</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3.1415927</span></span></code></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>exampleFunction6 x <span class="ot">=</span> y <span class="op">+</span> z</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> y <span class="ot">=</span> x <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">=</span> x <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>OK now the example of the area with a let in to round out the
+file</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ot">areaCircleLet ::</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>areaCircleLet diameter <span class="ot">=</span> <span class="kw">let</span> radius <span class="ot">=</span> diameter<span class="op">/</span><span class="dv">2</span> <span class="kw">in</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">pi</span> <span class="op">*</span> radius<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; areaCircleLet 2</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3.1415927</span></span></code></pre></div>
 <p>We will talk about types in more details in the next lecture. But to
 parse error messages, it might be helpful to mention the following. The
 type system supports <em>polymorphism</em>. It means certain expressions
 can take a type that can be instantiated in several ways.</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t []</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- [] :: [a]</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t []</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- [] :: [a]</span></span></code></pre></div>
 <p>the type of [] contains a <em>type variable</em> a. This means that
 [] could have any type obtained by substituting a for anything. I.e., we
 have for instance</p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ([] :: [Bool])</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ([] :: [Bool]) :: [Bool]</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ([] :: [Int])</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ([] :: [Int]) :: [Int]</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ([] :: [Bool])</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ([] :: [Bool]) :: [Bool]</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- &gt;&gt;&gt; :t ([] :: [Int])</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ([] :: [Int]) :: [Int]</span></span></code></pre></div>
 <p><a href="index.html">Back to index</a></p>
 <footer>
   <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>

@@ -71,9 +71,11 @@ exampleFunction2 x y = fromIntegral x + y
 
 {-
    Several things of note:
+
    * now that we have multiple arguments, we have to provide names on the LHS
      for each one. x is the Int, y is the Float, and that is determined from the
      type signature.
+
    * fromIntegral is a function that is able to turn an Int into a Float. Its
      actual type is a bit spooky, but we can check it is the case with the
      following kind of query, which would just raise an error if this was wrong
@@ -205,11 +207,13 @@ areaCircle diameter = pi * radius^2
 {-
    translated to (something that looks like) java, this would be
 
+```java
    public static float areaCircle(float diameter)
    {
      final float radius = diameter / 2;
      return pi * radius^2;
    }
+```
 
    radius is an intermediate value in the function, not in the scope of the
    file
@@ -222,7 +226,7 @@ areaCircle diameter = pi * radius^2
 -- 3.1415927
 
 {-
-   /!\ the where clause requires indentation; further, you can define multiple
+   /!\\ the where clause requires indentation; further, you can define multiple
    intermediate values with where clauses, but they must be indented at the
    same level, like so
 -}
