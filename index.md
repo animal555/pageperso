@@ -61,7 +61,7 @@ aspects of Monadic Second Order logic.
   *From normal functors to logarithmic space queries*,
      with Lê Thành Dũng Nguyễn,
      ICALP 2019,
-     [pdf](https://hal.archives-ouvertes.fr/hal-02024152v2/document)
+     [pdf](https://hal.archives-ouvertes.fr/hal-02024152v3/document)
 \
   *Kleene Algebra with Hypotheses*,
      with Amina Doumane, Denis Kuperberg and Damien Pous,
