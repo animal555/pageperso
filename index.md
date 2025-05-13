@@ -18,6 +18,21 @@ aspects of Monadic Second Order logic.
 
 # Publications
 
+  *Represented spaces of represented spaces*,
+     with Johanna Franklin, Eike Neumann, Arno Pauly and Manlio Valenti,
+     CiE 2025 (invited),
+     [pdf](spacesOfSpaces.pdf)
+\
+  *Computably discrete represented spaces*,
+     with Eike Neumann, Arno Pauly and Manlio Valenti,
+     CiE 2025,
+     [arxiv](https://arxiv.org/abs/2504.07020)
+\
+  *Weihrauch problems as containers*,
+     with Ian Price,
+     CiE 2025,
+     [arxiv](https://arxiv.org/abs/2501.17250)
+\
   *Implicit automata in λ-calculi III: affine planar string-to-string functions*,
      with Ian Price,
      MFPS 2024,
@@ -95,10 +110,6 @@ aspects of Monadic Second Order logic.
 
 # Preprints
 
-  *Weihrauch problems as containers*,
-     with Ian Price,
-     [arxiv](https://arxiv.org/abs/2501.17250)
-\
   *The equational theory of the Weihrauch lattice with (iterated) composition*,
      [arxiv](https://arxiv.org/abs/2408.14999)
 \
@@ -177,6 +188,8 @@ that is enough to make me smile.
 Below are some past or current teaching material. If you are currently
 enrolled in a module in Swansea, all you need should already be hosted on
 [canvas](https://canvas.swansea.ac.uk).
+
+## [CSCM12 2024/2025](cscm12-2425)
 
 ## [CS-205 2024/2025](cs205-2425)
 
