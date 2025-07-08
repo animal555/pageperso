@@ -110,6 +110,9 @@ aspects of Monadic Second Order logic.
 
 # Preprints
 
+  *The Myhill isomorphism theorem does not generalize much*,
+     [arxiv](https://arxiv.org/abs/2507.05028)
+\
   *The equational theory of the Weihrauch lattice with (iterated) composition*,
      [arxiv](https://arxiv.org/abs/2408.14999)
 \
