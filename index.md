@@ -45,18 +45,13 @@ aspects of Monadic Second Order logic.
 \
   *On the Weihrauch degree of the additive Ramsey theorem*,
      with Arno Pauly and Giovanni Soldà,
-     Computability 2024,
+     CiE 2022/Computability 2024,
      [arxiv](https://arxiv.org/abs/2301.02833)
 \
   *Synthesizing Nested Relational Queries from Implicit Specifications*,
      with Michael Benedikt and Christoph Wernhard,
      PODS 2023,
      [arxiv](https://arxiv.org/abs/2209.08299)
-\
-  *On the Weihrauch degree of the additive Ramsey theorem over the rationals*,
-     with Giovanni Soldà,
-     CiE 2022,
-     [pdf](ramQwei.pdf)
 \
   *Comparison-free polyregular functions*,
      with Lê Thành Dũng Nguyễn and Camille Noûs,
