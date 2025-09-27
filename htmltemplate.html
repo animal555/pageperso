@@ -74,7 +74,12 @@ $include-after$
 $endfor$
 <footer>
   <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>
-      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://glitchbra.in">⊳</a>
+      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://glitchbra.in">⊳</a><br/>
+      <div class="ring" id="ffrindiau" hidden="true">
+        <a id="ffindex">   </a>
+        <a id="ffprev"></a>
+        <a id="ffnext"></a>
+      </div>
 </footer>
 </body>
 </html>
@@ -90,4 +95,34 @@ $endfor$
 // Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
 // Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
 // quoi.
+
+// ffrindiau stuff
+
+  const ffelt = [ "prev", "index", "next"];
+  const ffrindiau = document.getElementById('ffrindiau');
+
+  fetch('https://ffrindiau.nya.pub/sites/cecilia.json')
+    .then(res => res.json())
+    .then((out) => {
+      ffrindiau.hidden = false;
+      ffelt.forEach((element) => {
+        var a = document.getElementById("ff" + element);
+        var title = out[element]['emoji'];
+        switch(String(element)) {
+            case "prev":
+               title = title + " ⊲ ";
+               break;
+            case "next":
+               title = " ⊳ " + title;
+               break;
+            default:
+               title = title + title + title;
+               break;
+        }
+        var link = document.createTextNode(title);
+        a.appendChild(link);
+        a.href = out[element]['link'];
+        ffrindiau.appendChild(a);
+      });
+    });
 </script>

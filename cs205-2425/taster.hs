@@ -65,7 +65,10 @@ exampleFunction x = x + x
 
 -- >>> (exampleFunction ((8)))
 
-{- Now here is a similar function  with two arguments -}
+{-
+  Now here is a similar function  with two arguments
+-}
+
 exampleFunction2 :: Int -> Float -> Float
 exampleFunction2 x y = fromIntegral x + y
 
@@ -236,7 +239,11 @@ exampleFunction6 x = y + z
         z = x + 1
 
 {-
-   OK now the example of the area with a let in to round out the file
+   There is another piece of syntax that allows you to do declaration of
+   intermediate values which is the `let <variable> = <value> in <value>`
+   syntax. This one allows you to make the intermediate definition before the
+   defined value (while where does it afterwards) and is not sensitive to
+   indentation.
 -}
 
 areaCircleLet :: Float -> Float
@@ -245,6 +252,33 @@ areaCircleLet diameter = let radius = diameter/2 in
 
 -- >>> areaCircleLet 2
 -- 3.1415927
+
+{-
+   let ins can be nested, or, if you respect indentation, can be put in blocks.
+   It is also possible to insert type signatures with where clauses and let ins.
+   Here is an horrible example that show that  all these syntactical features
+   can combine, in potentially horrible ways
+   (no need to understand what it does in details, it's random nonsense).
+-}
+
+anHorribleExample :: Int -> Int
+anHorribleExample x = let a = 2 in
+                      let b = "71" in
+                      let f :: Int -> Int
+                          f y = y - 2 + d
+                          c :: Int
+                          c = f (x + 5)
+                      in
+                       divideByTen (a + f (f c)) - d + e
+                      where divideByTen :: Int -> Int
+                            divideByTen z = read (init (show z))
+                            d :: Int
+                            d = 7 + e
+                            e = 55
+                            ee = 74 + d
+
+-- >>> anHorribleExample 58
+-- 17
 
 {-
    We will talk about types in more details in the next lecture. But to parse

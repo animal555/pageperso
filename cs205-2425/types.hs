@@ -40,6 +40,7 @@ type".
 
 In haskell, all types are determined _statically_, which means at compile-time,
 much like Java. It means that, unlike in Python which has dynamical typing:
+
 * type representations do not pollute the runtime
 * there can be no type errors while a compiled program runs
 
@@ -515,7 +516,6 @@ a string representation into your favorite value.
 
 * Enum provides facilities to enumerate all values of a type. This is what
 work under the hood of the .. notation for lists.
-
 Here is one of the main function, which gives the "next element" in a list
 
 ```haskell
@@ -560,6 +560,7 @@ out programs that carry dreadful runtime errors in other languages while also
 offering enough expressiveness to not crush users under bureaucracy (hopefully).
 
 Now *understanding* the type system helps you:
+
 * understand the errors the compilers/interpreters print out. All errors that
 are not runtime or syntax errors are type errors, and typically the haskell
 tool do there best to assume your programs can typecheck, and try to provide

@@ -33,12 +33,14 @@ exampleFunction x = x + x
 
    most of the functions in this file you could "translate to java" fairly
    easily generalizing the following example
-   ```java
+
+```java
    public static void exampleFunction(int x)
    {
      return x + x;
    }
-   ```
+```
+
    The body will almost always be of the shape `return <rhs of decl>`, and the
    first line determined by *both* the type declaration *and* the argument names
    on the right-hand side.
@@ -63,7 +65,10 @@ exampleFunction x = x + x
 
 -- >>> (exampleFunction ((8)))
 
-{- Now here is a similar function  with two arguments -}
+{-
+  Now here is a similar function  with two arguments
+-}
+
 exampleFunction2 :: Int -> Float -> Float
 exampleFunction2 x y = fromIntegral x + y
 
@@ -205,11 +210,13 @@ areaCircle diameter = pi * radius^2
 {-
    translated to (something that looks like) java, this would be
 
+```java
    public static float areaCircle(float diameter)
    {
      final float radius = diameter / 2;
      return pi * radius^2;
    }
+```
 
    radius is an intermediate value in the function, not in the scope of the
    file
@@ -222,7 +229,7 @@ areaCircle diameter = pi * radius^2
 -- 3.1415927
 
 {-
-   /!\ the where clause requires indentation; further, you can define multiple
+   /!\\ the where clause requires indentation; further, you can define multiple
    intermediate values with where clauses, but they must be indented at the
    same level, like so
 -}
@@ -232,7 +239,11 @@ exampleFunction6 x = y + z
         z = x + 1
 
 {-
-   OK now the example of the area with a let in to round out the file
+   There is another piece of syntax that allows you to do declaration of
+   intermediate values which is the `let <variable> = <value> in <value>`
+   syntax. This one allows you to make the intermediate definition before the
+   defined value (while where does it afterwards) and is not sensitive to
+   indentation.
 -}
 
 areaCircleLet :: Float -> Float
@@ -241,6 +252,33 @@ areaCircleLet diameter = let radius = diameter/2 in
 
 -- >>> areaCircleLet 2
 -- 3.1415927
+
+{-
+   let ins can be nested, or, if you respect indentation, can be put in blocks.
+   It is also possible to insert type signatures with where clauses and let ins.
+   Here is an horrible example that show that  all these syntactical features
+   can combine, in potentially horrible ways
+   (no need to understand what it does in details, it's random nonsense).
+-}
+
+anHorribleExample :: Int -> Int
+anHorribleExample x = let a = 2 in
+                      let b = "71" in
+                      let f :: Int -> Int
+                          f y = y - 2 + d
+                          c :: Int
+                          c = f (x + 5)
+                      in
+                       divideByTen (a + f (f c)) - d + e
+                      where divideByTen :: Int -> Int
+                            divideByTen z = read (init (show z))
+                            d :: Int
+                            d = 7 + e
+                            e = 55
+                            ee = 74 + d
+
+-- >>> anHorribleExample 58
+-- 17
 
 {-
    We will talk about types in more details in the next lecture. But to parse
