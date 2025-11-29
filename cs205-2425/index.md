@@ -14,6 +14,8 @@ bit better :)
 
 * [ifthenelse, pattern-matching and guarded equations](conditionals.html)
 
+* [recursion](recursion.html)
+
 * [higher-order functions](higherorder.html)
 
 * [type aliases, algebraic datatypes](adt.html)

@@ -29,7 +29,7 @@ svg .button rect{pointer-events:all;}
 svg .editable rect{pointer-events:all;}
 svg .dragable rect{pointer-events:all;}
 @font-face { font-family:f0; src:url("Neo-Euler_0_0_6fa8cf564d54d61a09d60bbfa56b3a4f.otf") format("opentype"); }
-.c0 { font-family:f0;font-size:3.7px; fill:#fcb54b;}
+.c0 { font-family:f0;font-size:3.7px; fill:#f4d9f9;}
 
 a:hover{opacity: 0.75;cursor:crosshair;}
 g.button:hover{opacity: 0.75;cursor:crosshair;}
