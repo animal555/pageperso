@@ -191,6 +191,8 @@ Below are some past or current teaching material. If you are currently
 enrolled in a module in Swansea, all you need should already be hosted on
 [canvas](https://canvas.swansea.ac.uk).
 
+## [CSCM712 2025/2026](cscm712-2526)
+
 ## [CSCM12 2024/2025](cscm12-2425)
 
 ## [CS-205 2024/2025](cs205-2425)
