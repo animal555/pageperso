@@ -7,9 +7,9 @@ class btree:
   def size(self):
         s = 1
         if self.left != None:
-            s += size(self.left)
+            s += self.size(self.left)
         if self.right != None:
-            s += size(self.right)
+            s += self.size(self.right)
         return s
 
   def __str__(self):
