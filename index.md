@@ -18,6 +18,11 @@ aspects of Monadic Second Order logic.
 
 # Publications
 
+  *Problems with fixpoints of polynomials of polynomials*,
+     with Ian Price,
+     LICS 2026,
+     [arxiv](https://arxiv.org/abs/2601.15420)
+\
   *Represented spaces of represented spaces*,
      with Johanna Franklin, Eike Neumann, Arno Pauly and Manlio Valenti,
      CiE 2025 (invited),
@@ -105,10 +110,6 @@ aspects of Monadic Second Order logic.
 
 # Preprints
 
-  *Problems with fixpoints of polynomials of polynomials*,
-     with Ian Price,
-     [arxiv](https://arxiv.org/abs/2601.15420)
-\
   *The Myhill isomorphism theorem does not generalize much*,
      [arxiv](https://arxiv.org/abs/2507.05028)
 \
