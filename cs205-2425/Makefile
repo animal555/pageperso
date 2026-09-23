@@ -1,4 +1,4 @@
-HS := adt.hs conditionals.hs higherorder.hs ioExamples.hs listComprehension.hs monadsAndLaziness.hs probabilityMonadExample.hs taster.hs types.hs
+HS := adt.hs recursion.hs conditionals.hs higherorder.hs ioExamples.hs listComprehension.hs monadsAndLaziness.hs probabilityMonadExample.hs taster.hs types.hs
 MD := index.md
 
 HTML := $(HS:.hs=.html) $(MD:.md=.html)

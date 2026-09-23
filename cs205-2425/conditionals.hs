@@ -1,9 +1,11 @@
+{-
+Branching
+=========
+-}
+
 import Prelude hiding (not, head, tail)
 
 {-
-Conditional expressions
-=======================
-
 So far, we have not seen ways of building functions outside of composing
 already defined operator. In this note, we introduce the constructs of haskell
 that allow for branching.
@@ -237,11 +239,13 @@ There is something similar going on with lists. In that case, there are two
 primitive list constructors that can be pattern-matched against: the empty
 list `[]` and the cons operator `(:)`
 
+```
 >>> :t []
 [] :: [a]
 
 >>> :t (:)
 (:) :: a -> [a] -> [a]
+```
 
 Here is an example
 -}

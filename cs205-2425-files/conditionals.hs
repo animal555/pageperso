@@ -237,11 +237,13 @@ There is something similar going on with lists. In that case, there are two
 primitive list constructors that can be pattern-matched against: the empty
 list `[]` and the cons operator `(:)`
 
+```
 >>> :t []
 [] :: [a]
 
 >>> :t (:)
 (:) :: a -> [a] -> [a]
+```
 
 Here is an example
 -}

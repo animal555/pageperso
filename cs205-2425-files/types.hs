@@ -15,7 +15,9 @@ Introduction
 In haskell, every expression e has some type(s) T, which we often write like
 this:
 
+```
 e :: T
+```
 
 Here, an expression can be a value or a function (once again, as a functional
 programming language, haskell blurs the frontier between what is a function
@@ -49,9 +51,9 @@ Some basic type constructors
 
 * `Bool`: boolean values, contain True and False
 * `[Bla]`: lists of values of type Bla. The fundamental constructors for this type
-are the empty list `[]` and the (:) operator which allows to build a list by
-defining the element x :: Bla in front (colloquially called the _head_) and the 
-rest of the list xs :: [Bla] (colloquially called the tail)
+are the empty list `[]` and the `(:)` operator which allows to build a list by
+defining the element `x :: Bla` in front (colloquially called the _head_) and the 
+rest of the list `xs :: [Bla]` (colloquially called the tail)
 
 -}
 
