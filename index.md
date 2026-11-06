@@ -23,7 +23,7 @@ aspects of Monadic Second Order logic.
 
 # Contact
 
-c.lastname@swansea.ac.uk or ceclastname@gmail.com
+c.pradic@ens-lyon.org or c.lastname@swansea.ac.uk
 
 # Publications
 
