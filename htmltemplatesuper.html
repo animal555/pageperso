@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+$if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+$endif$
+<title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <style>
+    $styles.html()$
+  </style>
+  <link rel="stylesheet" href="../dist/slopstrap.css" />
+$for(css)$
+  <link rel="stylesheet" href="$css$" />
+$endfor$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+$if(math)$
+$if(mathjax)$
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+$endif$
+  $math$
+$endif$
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+<!--$if(title)$
+<header id="title-block-header">
+<h1 class="title">$title$</h1>
+$if(subtitle)$
+<p class="subtitle">$subtitle$</p>
+$endif$
+$for(author)$
+<p class="author">$author$</p>
+$endfor$
+$if(date)$
+<p class="date">$date$</p>
+$endif$-->
+$if(abstract)$
+<div class="abstract">
+<div class="abstract-title">$abstract-title$</div>
+$abstract$
+</div>
+$endif$
+</header>
+$endif$
+$if(toc)$
+<nav id="$idprefix$TOC" role="doc-toc">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
+$table-of-contents$
+</nav>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+<footer>
+  <a href="https://guide.deuxfleurs.fr/infrastructures/production/">hosted by 2&#127804;</a><br/>
+      <a href="https://www.irif.fr/~ledent/">⊲</a> &#128376;&#128141; du <a href="nonConfusedTree.html">&#129382;</a> <a href="https://leo.kumikode.org/">⊳</a><br/>
+      <div class="ring" id="ffrindiau" hidden="true">
+        <a id="ffindex">   </a>
+        <a id="ffprev"></a>
+        <a id="ffnext"></a>
+      </div>
+</footer>
+</body>
+</html>
+
+
+<script src="../dist/slopstrap.js">
+</script>
+
+<script>
+  function randInt(bound){
+    return Math.floor(Math.random() * bound);
+  }
+
+  function randomBG(){
+    var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
+    var bgColor = bgColors[randInt(bgColors.length)];
+    document.querySelector('body').style.background = '#' + bgColor;
+  }
+
+  function clearBG() {
+    document.body.style.background = '';
+  }
+
+// Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
+// Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
+// quoi.
+  randomBG();
+
+
+// ffrindiau stuff
+
+  const ffelt = [ "prev", "index", "next"];
+  const ffrindiau = document.getElementById('ffrindiau');
+
+  fetch('https://ffrindiau.codeberg.page/sites/cecilia.json')
+    .then(res => res.json())
+    .then((out) => {
+      ffrindiau.hidden = false;
+      ffelt.forEach((element) => {
+        var a = document.getElementById("ff" + element);
+        var title = out[element]['emoji'];
+        switch(String(element)) {
+            case "prev":
+               title = title + " ⊲ ";
+               break;
+            case "next":
+               title = " ⊳ " + title;
+               break;
+            default:
+               title = title + title + title;
+               break;
+        }
+        var link = document.createTextNode(title);
+        a.appendChild(link);
+        a.href = out[element]['link'];
+        ffrindiau.appendChild(a);
+      });
+    });
+
+
+
+  var slop = false;
+  var button = document.querySelector("button");
+
+  const ww = window.innerWidth / 2;
+  const wh = window.innerHeight / 2;
+  var wSpark = ww;
+  var hSpark = wh;
+
+  var sparkleId;
+
+  function sparkle() {
+     wSpark += randInt(ww) - ww/2;
+     hSpark += randInt(wh) - wh/2;
+     Slopstrap.sparkleBurst(wSpark, hSpark, randInt(64));
+  }
+
+  function slopify()
+  {
+    console.log(slop);
+    if(slop){
+      Slopstrap.setLevel(0);
+      Slopstrap.unslopify();
+      randomBG();
+      clearInterval(sparkleId);
+      button = document.querySelector("button");
+      button.addEventListener("click", slopify);
+    }
+    else {
+      clearBG();
+      Slopstrap.setLevel(4);
+      Slopstrap.slopify();
+      button.innerHTML = "Communication mode";
+      sparkleId = setInterval(sparkle, 1000);
+    }
+    slop = !slop;
+  }
+
+  button.addEventListener("click", slopify);
+
+</script>
+
+

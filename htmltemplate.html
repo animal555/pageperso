@@ -20,6 +20,7 @@ $endif$
   <style>
     $styles.html()$
   </style>
+  <link rel="stylesheet" href="./dist/slopstrap.css" />
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
@@ -35,6 +36,7 @@ $endif$
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+<button class="darkmode">Dark mode (it will cost you)</button>
 </head>
 <body>
 $for(include-before)$
@@ -84,17 +86,30 @@ $endfor$
 </body>
 </html>
 
+
+<script src="./dist/slopstrap.js">
+</script>
+
 <script>
   function randInt(bound){
     return Math.floor(Math.random() * bound);
   }
 
-  var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
-  var bgColor = bgColors[randInt(bgColors.length)];
-  document.querySelector('body').style.background = '#' + bgColor;
+  function randomBG(){
+    var bgColors = ['f9aca2','f9e1a2','b9f9a2','a2a6f9','d5a2f9','f9a2d8','d9dbba'];
+    var bgColor = bgColors[randInt(bgColors.length)];
+    document.querySelector('body').style.background = '#' + bgColor;
+  }
+
+  function clearBG() {
+    document.body.style.background = '';
+  }
+
 // Oui je n'avais rien de mieux à faire de mon temps, tel que me nourrir.
 // Je prends les suggestions pour la palette de couleurs, j'ai fait n'importe
 // quoi.
+  randomBG();
+
 
 // ffrindiau stuff
 
@@ -125,4 +140,58 @@ $endfor$
         ffrindiau.appendChild(a);
       });
     });
+
+
+
+  var slop = false;
+  var button = document.querySelector("button");
+
+  const ww = window.innerWidth;
+  const wh = window.innerHeight;
+  var wSpark = ww / 2;
+  var hSpark = wh / 2;
+
+  var sparkleId;
+
+  function modPos(x, y) {
+    var v = x % y;
+    if (v < 0) {
+      v += y;
+    }
+    return v;
+  }
+
+  function sparkle() {
+     wSpark += randInt(ww/2) - ww/4;
+     hSpark += randInt(wh/2) - wh/4;
+     wSpark = modPos(wSpark,ww);
+     hSpark = modPos(hSpark,wh);
+     Slopstrap.sparkleBurst(wSpark, hSpark, randInt(43));
+  }
+
+  function slopify()
+  {
+    console.log(slop);
+    if(slop){
+      Slopstrap.setLevel(0);
+      Slopstrap.unslopify();
+      randomBG();
+      clearInterval(sparkleId);
+      button = document.querySelector("button");
+      button.addEventListener("click", slopify);
+    }
+    else {
+      clearBG();
+      Slopstrap.setLevel(4);
+      Slopstrap.slopify();
+      button.innerHTML = "Communication mode";
+      sparkleId = setInterval(sparkle, 1000);
+    }
+    slop = !slop;
+  }
+
+  button.addEventListener("click", slopify);
+
 </script>
+
+
